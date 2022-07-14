@@ -1,0 +1,9 @@
+{
+    "diagnostic.errorSign": "X",
+    "diagnostic.warningSign": "!",
+    "diagnostic.infoSign": ">",
+    "diagnostic.hintSign": ">",
+    "colors.filetypes": ["css"],
+    "suggest.autoTrigger": "trigger",
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true
+}
