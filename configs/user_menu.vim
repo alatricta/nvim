@@ -14,3 +14,7 @@ menu Exit.save     :update<CR>
 map <F10> :emenu Exit.<Tab>
 " ^^^^^^^^^^^^^^ User menu settings ^^^^^^^^^^^^^^
 
+" User commands
+com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+
+nnoremap = :FormatXML<Cr>

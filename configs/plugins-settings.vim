@@ -117,8 +117,10 @@ nmap <Leader>cc :call CocAction('pickColor')<Enter>
 "
 " ShowDocumentation in functions.vim
 nnoremap <silent>K :call ShowDocumentation()<Enter>
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" переход по диагностике Coc
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> g] <Plug>(coc-diagnostic-next)
 
 " пролистывание во всплывающем окне
 nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? 
@@ -134,6 +136,9 @@ vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ?
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? 
             \coc#float#scroll(0) : "\<C-b>"
 
+" добавление позиции мультикурсора
+nmap <silent> <C-d> <Plug>(coc-cursors-position)
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -148,27 +153,38 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+" set signcolumn=yes
+
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " Highlight the symbol and its references when holding the cursor.
 " Подсветка слова, находящегося под курсором, по всему тексту
 autocmd CursorHold * silent call CocActionAsync('highlight')
-" По умолчанию слишком долгая задержка перед показом вариантов вставки
+" По умолчанию слишком долгая задержка перед показом вариатов вставки
 " (4000 ms = 4 s) 
 " делаем её меньше
 set updatetime=500
 
 " expand snippets 
 imap <leader>sn <Plug>(coc-snippets-expand)
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
 "select from menu by Enter
-inoremap <silent><expr> <Enter> pumvisible() ? 
-            \coc#_select_confirm() : 
-            \"\<C-g>u\<Enter>\<C-r>=coc#on_enter()\<Enter>"
+" inoremap <silent><expr> <Enter> pumvisible() ? 
+"             \coc#_select_confirm() : 
 
 " подсмотрено
 " function! ShowDocumentation()
@@ -190,12 +206,27 @@ function! ShowDocumentation()
   endif
 endfunction
 
+
+" -- Coc Formating
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+" ^^ Coc Formating
+
+
 " Функция для получение текущей функции в коде
 " нужна для ligthline
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
-
 
 let g:coc_global_extensions=[
             \'coc-json',
@@ -208,7 +239,11 @@ let g:coc_global_extensions=[
 " ^^^^^^^^^^^^^^ COC settings ^^^^^^^^^^^^^^
 
 
-" Comment.nvim settings
+" -------=======  Comment.nvim settings  ======------
 lua << EOF
     require('Comment').setup()
 EOF
+
+nmap <c-/> gcc
+vmap <c-/> gc
+" ^^^^^^^^^^^^^^ Comment.nvim settings ^^^^^^^^^^^^^^

@@ -83,14 +83,16 @@ set novisualbell
 
 " Folding
 set foldenable
-set foldmethod=syntax
-autocmd FileType tex set foldmethod=indent
+set foldmethod=indent
+" autocmd FileType tex set foldmethod=indent
 
 " Некоторые исправления типичных опечаток
 :command WQ wq
 :command Wq wq
 :command W w
 :command Q q
+" :command Q1 q!
+" :command q1 q!
 
 
 " ----===== Команды выполняющиеся автоматически =====-----

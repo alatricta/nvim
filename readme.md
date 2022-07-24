@@ -2,12 +2,24 @@
 
 Установить программу nvim можно так:
 
-apt-get install neovim
+sudo apt-get install neovim
+
+документация по установке тут;
+
+    https://github.com/neovim/neovim/wiki/Installing-Neovim
 
 Переходим в папку:
 
-cd ~/.config
+    cd ~/.config
 
 И клонируем данный репозиторий:
 
-git clone git@github.com:alatricta/nvim.git
+    git clone git@github.com:alatricta/nvim.git
+
+Запускаем neovim:
+
+    nvim
+
+Устанавливаем плагины:
+
+    :PlugInstall

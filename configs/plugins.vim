@@ -3,6 +3,7 @@
 "=====================================================
 call plug#begin('~/.vim/plugged')
 	" коментирование текста или блока текста в зависимости от синтаксиса
+    Plug 'numToStr/Comment.nvim'
 	" Plug 'itchyny/tcomment_vim'
 	" строка состояния (внизу экрана)
 	 Plug 'itchyny/lightline.vim'
@@ -30,7 +31,8 @@ call plug#begin('~/.vim/plugged')
 
     " to try
     Plug 'othree/xml.vim'
-    Plug 'numToStr/Comment.nvim'
+    " post install (yarn install | npm install) then load plugin only for editing supported files
+    Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 
 call plug#end()
 
