@@ -2,7 +2,7 @@
 
 Установить программу nvim можно так:
 
-sudo apt-get install neovim
+    sudo apt-get install neovim
 
 документация по установке тут;
 
