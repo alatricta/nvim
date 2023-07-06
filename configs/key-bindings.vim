@@ -77,3 +77,10 @@ inoremap <C-k> <C-o><C-b>
 " Блочное выделение вместо CTRL-V назначено на Alt-V
 nnoremap <A-v> <C-v>
 
+" Некоторые исправления типичных опечаток
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+:command Q1 q!
+:command q1 q!
