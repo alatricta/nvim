@@ -86,14 +86,6 @@ set foldenable
 set foldmethod=indent
 " autocmd FileType tex set foldmethod=indent
 
-" Некоторые исправления типичных опечаток
-:command WQ wq
-:command Wq wq
-:command W w
-:command Q q
-" :command Q1 q!
-" :command q1 q!
-
 
 " ----===== Команды выполняющиеся автоматически =====-----
 " Правильное распознование коментариев в json файле (рекондовано COC.NVIM)
