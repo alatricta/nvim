@@ -9,9 +9,14 @@
 colorscheme gruvbox
 
 " Работа сочетаний клавиш и на русском языке тоже
+" set langmap=  "Здесь была проблема с вводом двойных кавычек в нормальном
+" режиме, для ввода команд. Проверка с 16.11.2023
+"      \!\\"№\\;%?*ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;
+"      \!@#$%&*`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
 set langmap=
-    \!\\"№\\;%?*ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;
-    \!@#$%&*`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
+    \№\\;?ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;
+    \#$&`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
+
 
 " Включаем распознавание типов файлов и типо-специфичные плагины:
 filetype on
@@ -23,19 +28,21 @@ filetype plugin indent on
 set smartindent
 
 " добавление нумерации строк
-set number
+set number  " set nu - сокращённо
+set relativenumber  " для отображения относительного номера (set rnu - кратко)
 
 " влючение подсветки синтаксиса
 syntax on
 
 " игнорирование регистра при поиске
 set ignorecase  " игнорирование регистра при поиске
-set smartcase
+set smartcase   " Игнорировать регистр, если нет заглавных букв
 set incsearch	" подсвечивать поиск по мере набора
-set showmatch
+set showmatch   " Показать совпадения
 set hlsearch    " подсвечивать результаты поиска
 " Отключить выделение поиска одним нажатием клавиши
 map - :nohls<cr>
+nnoremap <Esc> :nohls<cr>
 
 " поведение Backspace
 " set backspace=indent,eol,start whichwrap+=<,>,[,]
@@ -74,7 +81,7 @@ set noswapfile 	     " no swap files
 set wrap linebreak nolist "Данная вариация работает как wrap...
 			"... но переносит строчки не посимвольно, а по словам
 set cursorline "А так мы можем подсвечивать строку с курсором
-set colorcolumn=80
+set colorcolumn=100
 
 " отключаем пищалку и мигание
 set noerrorbells
@@ -84,18 +91,14 @@ set novisualbell
 " Folding
 set foldenable
 set foldmethod=indent
+set foldlevel=10
 " autocmd FileType tex set foldmethod=indent
-
-" Некоторые исправления типичных опечаток
-:command WQ wq
-:command Wq wq
-:command W w
-:command Q q
-" :command Q1 q!
-" :command q1 q!
-
 
 " ----===== Команды выполняющиеся автоматически =====-----
 " Правильное распознование коментариев в json файле (рекондовано COC.NVIM)
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
+" Кратковременное выделение скопированного участка
+autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
+" Добавление в парные символы знаков < и >
+set mps+=<:>

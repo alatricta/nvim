@@ -2,11 +2,19 @@
 " открыть окно Netrw
 nnoremap <F3> :Lexplore<CR>
 
+" Некоторые исправления типичных опечаток командной строки
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+
 " Удобный возврат в NORMAL mode из режима INSERT
 inoremap JK <ESC>
 inoremap ОЛ <ESC>
 inoremap ii <ESC>
 inoremap шш <ESC>
+inoremap jj <ESC>
+inoremap оо <ESC>
 
 " Перемещение по тексту во время редактирования 
 inoremap <A-h> <C-o>h
@@ -18,12 +26,13 @@ inoremap <A-l> <C-o>l
 nnoremap <space> za
 
 " Удаление BACKSPACE'ом в режимах NORMAL, VISUAL
-vnoremap <BS> d
-nnoremap <BS> dh
+" vnoremap <BS> d
+" nnoremap <BS> dh
+map <BS> X
 
 " копиpование и вставка привычными сочетаниями: Ctrl+C и Ctrl+V
 " операции производятся по средствам системного буфера
-" почему-то не нормально не рабо
+" почему-то не нормально работает
 " inoremap <C-v> <C-O>""+p=']
 " nnoremap <C-v> "+p=']
 " vnoremap <C-c> "+y
@@ -75,5 +84,5 @@ inoremap <C-k> <C-o><C-b>
 " set cmdheight=2
 
 " Блочное выделение вместо CTRL-V назначено на Alt-V
-nnoremap <A-v> <C-v>
+" nnoremap <A-v> <C-v>
 

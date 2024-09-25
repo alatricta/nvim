@@ -1,7 +1,7 @@
 "=====================================================
 " Vim-plug  
 "=====================================================
-call plug#begin('~/.vim/plugged')
+call plug#begin('/home/sprut/.vim/plugged')
 	" коментирование текста или блока текста в зависимости от синтаксиса
     Plug 'numToStr/Comment.nvim'
 	" Plug 'itchyny/tcomment_vim'
@@ -27,12 +27,16 @@ call plug#begin('~/.vim/plugged')
 
     " colorshemes
     Plug 'morhetz/gruvbox'
-    Plug 'ayu-theme/ayu-vim'
+    " Plug 'ayu-theme/ayu-vim'
+    " Plug 'challenger-deep-theme/vim'
+    " Plug 'sainnhe/sonokai'
+    " Plug 'keith/parsec.vim'
+    " Plug 'mkarmona/materialbox'
+    " Plug 'dikiaap/minimalist'
+    " Plug 'jacoborus/tender.vim'
 
     " to try
     Plug 'othree/xml.vim'
-    " post install (yarn install | npm install) then load plugin only for editing supported files
-    Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
 
 call plug#end()
 

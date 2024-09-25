@@ -68,8 +68,10 @@ set noshowmode
 " пока строки табов (в нашем случае буферов вверху)
 set showtabline=2
 
+    " \ 'colorscheme': 'deus', 
 let g:lightline = {
-	\ 'active': {
+    \ 'colorscheme': 'powerlineish', 
+    \ 'active': {
 	\   'left': [ 
 	\	[ 'mode', 'paste' ], 
 	\	[  'cocstatus', 'readonly', 'filename', 'modified', 'gitbranch', 'curentfunction' ] ],
@@ -108,6 +110,8 @@ nmap <silent> ga <Plug>(coc-codeaction-line)
 xmap <silent> ga <Plug>(coc-codeaction-selected)
 nmap <silent> gA <Plug>(coc-codeaction)
 
+"Переименование объекта под курсором
+" Rename object
 nmap <Leader>rn <Plug>(coc-rename)
 nmap <F2> <Plug>(coc-rename)
 
@@ -115,7 +119,8 @@ nmap <F2> <Plug>(coc-rename)
 nmap <Leader>cf <Plug>(coc-format)
 nmap <Leader>cc :call CocAction('pickColor')<Enter>
 "
-" ShowDocumentation in functions.vim
+" Клавиша показа документации
+" Key for ShowDocumentation 
 nnoremap <silent>K :call ShowDocumentation()<Enter>
 
 " переход по диагностике Coc
@@ -144,6 +149,7 @@ nmap <silent> <C-d> <Plug>(coc-cursors-position)
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
@@ -153,21 +159,30 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Клавиша для перехода по полям сниппетов
+" Key for jump to snippets fields
+let g:coc_snippet_next = '<tab>'
+
+" Всегда показывать колонку слева от номера строки.
+" В этой колонке показываются значки диагностики линтера.
+" Иначе колонка будет появляться, только после появления сообщений линтера,
+" потом будет пропадать
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 " set signcolumn=yes
 
+" CTRL+пробел для вызова автокомплита
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Highlight the symbol and its references when holding the cursor.
 " Подсветка слова, находящегося под курсором, по всему тексту
+" Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " По умолчанию слишком долгая задержка перед показом вариатов вставки
-" (4000 ms = 4 s) 
-" делаем её меньше
-set updatetime=500
+" (4000 ms = 4 s). Делаем её меньше
+set updatetime=300
 
+" Вызов окна сниппетов
 " expand snippets 
 imap <leader>sn <Plug>(coc-snippets-expand)
 
@@ -176,9 +191,6 @@ imap <leader>sn <Plug>(coc-snippets-expand)
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                         \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
@@ -186,18 +198,8 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 " inoremap <silent><expr> <Enter> pumvisible() ? 
 "             \coc#_select_confirm() : 
 
-" подсмотрено
-" function! ShowDocumentation()
-"     if &filetype == 'vim'
-"         execute 'h '.expand('<cword>')
-"     elseif (coc#rpc#ready())
-"         call CocActionAsync('doHover')
-"     else
-"         execute '!' . &keywordprg . " " . expand('<cword>')
-"     endif
-" endfunction
-
-" с git разработчика
+"Показ документации
+" Show documentation
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
@@ -211,6 +213,9 @@ endfunction
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
 augroup mygroup
   autocmd!
@@ -244,6 +249,9 @@ lua << EOF
     require('Comment').setup()
 EOF
 
-nmap <c-/> gcc
-vmap <c-/> gc
+" Комментарий по кнопке  'CTRL+/'
+" В некоторых терминалах (например в Termux'е) 
+" при назначении необходимо поставить знак '_' вместо '/'
+nmap <C-_> gcc
+vmap <C-_> gc
 " ^^^^^^^^^^^^^^ Comment.nvim settings ^^^^^^^^^^^^^^
