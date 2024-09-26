@@ -100,5 +100,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Кратковременное выделение скопированного участка
 autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
+
 " Добавление в парные символы знаков < и >
 set mps+=<:>
+
